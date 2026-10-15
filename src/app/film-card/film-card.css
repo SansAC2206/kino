@@ -1,0 +1,103 @@
+.card {
+  display: flex;
+  flex-direction: column;
+  background: #ffffff;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow:
+    0 1px 3px rgba(0, 0, 0, 0.08),
+    0 4px 12px rgba(0, 0, 0, 0.04);
+  transition:
+    transform 0.15s ease,
+    box-shadow 0.15s ease;
+  border: 2px solid transparent;
+}
+
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+}
+
+/* Стиль для фильмов с рейтингом выше 8.5 */
+.card.high-rated {
+  border-color: #f59e0b;
+  background: linear-gradient(180deg, #fffbeb 0%, #ffffff 40%);
+}
+
+.card.high-rated .rating b {
+  color: #b45309;
+}
+
+.card.high-rated .title::after {
+  content: ' ★';
+  color: #f59e0b;
+}
+
+.card-link {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  padding: 12px;
+  gap: 6px;
+}
+
+.poster {
+  width: 100%;
+  aspect-ratio: 2 / 3;
+  object-fit: cover;
+  border-radius: 8px;
+  background: #e5e7eb;
+}
+
+.title {
+  margin: 6px 0 0;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.25;
+}
+
+.meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 0;
+  font-size: 13px;
+  color: #6b7280;
+}
+
+.dot {
+  opacity: 0.6;
+}
+
+.rating {
+  margin: 0;
+  font-size: 13px;
+  color: #374151;
+}
+
+.rating b {
+  font-size: 15px;
+}
+
+.fav-btn {
+  margin: 0 12px 12px;
+  padding: 10px 12px;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  background: #ffffff;
+  color: #111827;
+  font-weight: 600;
+  transition:
+    background 0.15s ease,
+    border-color 0.15s ease;
+}
+
+.fav-btn:hover {
+  background: #f9fafb;
+}
+
+.fav-btn.is-saved {
+  background: #facc15;
+  border-color: #eab308;
+  color: #111827;
+}

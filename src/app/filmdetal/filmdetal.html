@@ -1,0 +1,66 @@
+@if (loading()) {
+  <p class="state">Загружаем фильм…</p>
+} @else if (error()) {
+  <p class="state error">{{ error() }}</p>
+} @else if (film(); as f) {
+  <article class="film-detail">
+    <div class="poster-col">
+      <img class="poster" [src]="f.posterUrl" [alt]="f.nameRu || f.nameEn || 'Постер'" />
+
+      @if (f.ratingKinopoisk !== null) {
+        <div class="rating-box" [class.top]="f.ratingKinopoisk > 8.5">
+          <span class="rating-label">Кинопоиск</span>
+          <span class="rating-value">{{ f.ratingKinopoisk }}</span>
+        </div>
+      }
+
+      @if (f.ratingImdb !== null) {
+        <div class="rating-box imdb">
+          <span class="rating-label">IMDb</span>
+          <span class="rating-value">{{ f.ratingImdb }}</span>
+        </div>
+      }
+    </div>
+
+    <div class="info-col">
+      <h1>{{ f.nameRu || f.nameEn || f.nameOriginal || 'Без названия' }}</h1>
+
+      @if (f.nameOriginal && f.nameOriginal !== f.nameRu) {
+        <p class="original">{{ f.nameOriginal }}</p>
+      }
+
+      @if (f.slogan) {
+        <p class="slogan">«{{ f.slogan }}»</p>
+      }
+
+      <ul class="meta">
+        @if (f.year) {
+          <li><b>Год:</b> {{ f.year }}</li>
+        }
+        @if (f.genres.length) {
+          <li><b>Жанры:</b> {{ f.genres.map((g) => g.genre).join(', ') }}</li>
+        }
+        @if (f.countries.length) {
+          <li><b>Страны:</b> {{ f.countries.map((c) => c.country).join(', ') }}</li>
+        }
+        @if (f.ratingAgeLimits) {
+          <li><b>Возраст:</b> {{ f.ratingAgeLimits }}+</li>
+        }
+        @if (f.ratingKinopoiskVoteCount) {
+          <li><b>Голосов:</b> {{ f.ratingKinopoiskVoteCount }}</li>
+        }
+      </ul>
+
+      @if (f.shortDescription) {
+        <p class="short">{{ f.shortDescription }}</p>
+      }
+
+      @if (f.description) {
+        <section class="description">
+          <h2>Описание</h2>
+          <p>{{ f.description }}</p>
+        </section>
+      }
+    </div>
+  </article>
+}

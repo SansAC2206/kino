@@ -1,0 +1,57 @@
+<section class="hero">
+  <form class="search" (submit)="search($event)">
+    <label for="movie-search">Название фильма</label>
+    <div class="search-row">
+      <input
+        id="movie-search"
+        #searchInput
+        type="text"
+        placeholder="Например: Матрица"
+        [value]="searchDraft()"
+        (input)="searchDraft.set(searchInput.value)"
+      />
+      <button type="submit">Найти</button>
+    </div>
+  </form>
+</section>
+
+<header class="page-header">
+  <h1>{{ title }}</h1>
+  <p>Мой каталог фильмов</p>
+</header>
+
+<div class="toolbar">
+  <label class="switch">
+    <input
+      type="checkbox"
+      [checked]="onlyFavorites()"
+      (change)="onlyFavorites.set(!onlyFavorites())"
+    />
+    <span>Только избранные</span>
+  </label>
+
+  <span class="stat stat-star">★ В избранном: {{ favorites.count() }}</span>
+  <span class="stat stat-removed">✗ Удалено: {{ favorites.removedCount() }}</span>
+</div>
+
+@if (loading()) {
+  <p class="state">Загружаем фильмы…</p>
+} @else if (visibleFilms().length === 0) {
+  <p class="state">Фильмов не найдено.</p>
+} @else {
+  <section class="grid">
+    @for (film of visibleFilms(); track film.kinopoiskId) {
+      <app-film-card
+        [film]="film"
+        [saved]="favorites.has(film.kinopoiskId)"
+        (toggleFavorite)="favorites.toggle($event)"
+      />
+    }
+  </section>
+
+  <nav class="pagination">
+    <button (click)="changePage(page() - 1)" [disabled]="page() <= 1">Назад</button>
+    <span>{{ page() }} / {{ totalPages() }}</span>
+    <button (click)="changePage(page() + 1)" [disabled]="page() >= totalPages()">Вперёд</button>
+  </nav>
+}

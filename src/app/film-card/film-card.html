@@ -1,0 +1,34 @@
+<article class="card" [class.high-rated]="isHighRated()">
+  <a class="card-link" [routerLink]="['/film', film().kinopoiskId]">
+    <img
+      class="poster"
+      [src]="film().posterUrlPreview"
+      [alt]="film().nameRu || 'Постер'"
+      loading="lazy"
+    />
+
+    <h2 class="title">{{ film().nameRu || film().nameEn || 'Без названия' }}</h2>
+
+    <p class="meta">
+      <span>{{ film().year ?? '—' }}</span>
+      <span class="dot">•</span>
+      <span class="country">{{ countryList() }}</span>
+    </p>
+
+    @if (film().ratingKinopoisk !== null) {
+      <p class="rating">
+        Рейтинг:
+        <b>{{ film().ratingKinopoisk }}</b>
+      </p>
+    }
+  </a>
+
+  <button
+    type="button"
+    class="fav-btn"
+    [class.is-saved]="saved()"
+    (click)="toggleFavorite.emit(film())"
+  >
+    {{ saved() ? '★ Убрать из избранного' : '☆ Буду смотреть' }}
+  </button>
+</article>
